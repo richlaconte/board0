@@ -1,0 +1,24 @@
+.row {
+    margin: 0px;
+    height: 50px;
+}
+
+.col {
+    width: 48px;
+    height: 48px;
+    border: solid 1px grey;
+    display: inline-block;
+}
+
+.unit {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: aquamarine;
+    cursor: pointer;
+    position: inherit;
+}
+
+.dragging {
+    position: absolute !important;
+}
