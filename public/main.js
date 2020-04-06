@@ -87,6 +87,7 @@ const placeUnit = (newX, newY, oldX, oldY, id) => {
         if (id) {
             unit.id = id;
         }
+
         let row = document.getElementsByClassName('row')[newX];
         let col = row.childNodes[newY];
         col.appendChild(unit);
