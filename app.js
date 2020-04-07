@@ -78,11 +78,14 @@ let game = {
         if (!id) {
             return this.turn;
         } else {
-            if (id === this.players[this.turn].id) {
-                return true;
-            } else {
-                return false;
+            if (this.players[this.turn]) {
+                if (id === this.players[this.turn].id) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
+            return false;
         }
     },
     toggleTurn: function () {
