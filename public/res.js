@@ -3,6 +3,10 @@ socket.on('board', (board) => {
     updateBoard(board);
 })
 
+socket.on('ping', () => {
+    console.log('ping');
+})
+
 // Change this to clear all then add
 const updateBoard = (board) => {
     for (let i = 0; i < board.length; i++) {

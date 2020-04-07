@@ -127,6 +127,11 @@ const move = (playerID, oldX, oldY, newX, newY) => {
 
 }
 
+let sendHeartbeat = () => {
+    setTimeout(sendHeartbeat, 8000);
+    io.emit('ping', {beat: 1 });
+}
+
 io.on('connection', (socket) => {
     // Log connected player
     console.log(`user ${socket.id} connected`);
@@ -152,6 +157,7 @@ io.on('connection', (socket) => {
         }
         io.emit('board', game.board);
     })
+    setTimeout(sendHeartbeat, 8000);
 });
 
 http.listen(3000, () => {
