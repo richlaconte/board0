@@ -95,16 +95,36 @@ let game = {
 }
 
 const move = (playerID, oldX, oldY, newX, newY) => {
-    if (game.board[newY][newX] === null) {
-        if (oldX === 'hand') {
+    if (oldX === 'hand') {
+        if (game.board[newY][newX] === null) {
+            let obj = {
+                playerID,
+                type: 'unit'
+            }
+            game.board[newY][newX] = obj;
+            return true;
+        }
+    } else {
+        if (game.board[oldY][oldX].playerID === playerID) {
+            if (game.board[newY][newX] === null) {
+                game.board[oldY][oldX] = null;
+
+                let obj = {
+                    playerID,
+                    type: 'unit'
+                }
+                game.board[newY][newX] = obj;
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            game.board[oldY][oldX] = null;
+            console.log('ERROR: unit not owned by player');
+            return false;
         }
-        let obj = {
-            type: 'unit'
-        }
-        game.board[newY][newX] = obj;
     }
+
+
 }
 
 io.on('connection', (socket) => {
@@ -124,8 +144,11 @@ io.on('connection', (socket) => {
     socket.on('move', (data) => {
         console.log(socket.id, data);
         console.log('Is turn?:', game.checkTurn(socket.id));
+        console.log(`turn: ${game.turn}`);
         if (game.checkTurn(socket.id)) {
-            move(socket.id, data.oldX, data.oldY, data.newX, data.newY);
+            if (move(socket.id, data.oldX, data.oldY, data.newX, data.newY)) {
+                game.toggleTurn();
+            }
         }
         io.emit('board', game.board);
     })
