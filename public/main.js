@@ -1,4 +1,18 @@
+let joinBtn = document.getElementById('joinBtn');
+let room = document.getElementById('roomInput');
+let name = document.getElementById('nameInput');
+joinBtn.addEventListener('click', () => {
+    if (room.value != null && name.value != null) {
+        joinRoom(room.value, name.value);
+    } else {
+        console.log('please enter values for room and name');
+    }
+})
 
+const showHand = () => {
+    let hand = document.getElementById('hand');
+    hand.style.display = 'block';
+}
 
 let board = [];
 
@@ -23,8 +37,6 @@ const createBoard = () => {
         }
     }
 }
-
-createBoard();
 
 const renderBoard = () => {
     for (let i = 0; i < 10; i++) {

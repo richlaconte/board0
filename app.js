@@ -35,7 +35,7 @@ const assignRoom = (roomName, playerID, playerName) => {
     }
 }
 
-const move = (playerID, oldX, oldY, newX, newY) => {
+const move = (game, playerID, oldX, oldY, newX, newY) => {
     if (oldX === 'hand') {
         if (game.board[newY][newX] === null) {
             let obj = {
@@ -82,12 +82,15 @@ io.on('connection', (socket) => {
     //let game = createGame();
 
     // Add player to game/spectate
-    //game.addPlayer(socket.id, 'test');
-
-    let room = assignRoom('testRoom', socket.id, 'testPlayer');
-    let game = room.game;
-
-    io.emit('board', game.board);
+    //game.addPlayer(socket.id, 'test');    
+    let room;
+    let game;
+    socket.on('joinRoom', (data) => {
+        console.log('joinRoom request received');
+        room = assignRoom(data.roomName, socket.id, data.playerName);
+        game = room.game;
+        io.emit('board', game.board);
+    })
 
     socket.on('disconnect', () => {
         console.log(`user ${socket.id} disconnected`);
@@ -99,7 +102,7 @@ io.on('connection', (socket) => {
         console.log('Is turn?:', game.checkTurn(socket.id));
         console.log(`turn: ${game.turn}`);
         if (game.checkTurn(socket.id)) {
-            if (move(socket.id, data.oldX, data.oldY, data.newX, data.newY)) {
+            if (move(game, socket.id, data.oldX, data.oldY, data.newX, data.newY)) {
                 game.toggleTurn();
             }
         }
