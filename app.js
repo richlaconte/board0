@@ -118,6 +118,9 @@ io.on('connection', (socket) => {
         if (game) {
             game.removePlayer(socket.id);
         }
+        io.to(room.name).emit('chat',
+            chat.newMessage(game.getPlayerNameByID(socket.id), `has left the room.`)
+        );
     })
 
     socket.on('move', (data) => {
