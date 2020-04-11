@@ -178,6 +178,9 @@ addUnitToHand();
 
 
 // CHAT
+const chatBtn = document.getElementById('chatBtn');
+const chatInput = document.getElementById('chatInput');
+
 const appendChatMessage = (message) => {
     let msg = document.createElement('li');
     msg.className = 'chatItem';
@@ -185,3 +188,15 @@ const appendChatMessage = (message) => {
     let list = document.getElementById('chatList');
     list.appendChild(msg);
 }
+
+chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        sendMessage(chatInput.value);
+        chatInput.value = '';
+    }
+})
+
+chatBtn.addEventListener('click', () => {
+    sendMessage(chatInput.value);
+    chatInput.value = '';
+})

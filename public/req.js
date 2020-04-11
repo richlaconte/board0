@@ -13,3 +13,10 @@ const requestMove = (oldX, oldY, newX, newY) => {
         newY
     })
 }
+
+const sendMessage = (text) => {
+    console.log(`sending message ${text}`);
+    socket.emit('message', {
+        text
+    })
+}

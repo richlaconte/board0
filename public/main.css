@@ -6,6 +6,15 @@
     width: 600px;
     height: 200px;
     border: 1px solid black;
+    overflow: scroll;
+    position: relative;
+}
+#chatListParent {
+    overflow: scroll;
+    position: absolute;
+    height: 200px;
+    bottom: 0px;
+    width: 100%;
 }
 #chatList {
     height: 140px;
@@ -15,11 +24,17 @@
     
 }
 #chatInput {
+    position: absolute;
+    bottom: 0px;
     width: 75%;
     height: 22px;
 }
 #chatBtn {
     width: 24%;
+    position: absolute;
+    bottom: 2px;
+    right: 0px;
+    height: 22px;
 }
 
 .row {
