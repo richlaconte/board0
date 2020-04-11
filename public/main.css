@@ -13,11 +13,10 @@
     overflow: scroll;
     position: absolute;
     height: 200px;
-    bottom: 0px;
+    bottom: 18px;
     width: 100%;
 }
 #chatList {
-    height: 140px;
     width: 100%;
 }
 .chatItem {

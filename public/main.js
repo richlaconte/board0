@@ -187,6 +187,12 @@ const appendChatMessage = (message) => {
     msg.innerHTML = message.playerName + ': ' + message.text;
     let list = document.getElementById('chatList');
     list.appendChild(msg);
+    scrollChatToBottom();
+}
+
+const scrollChatToBottom = () => {
+    const parent = document.getElementById('chatListParent');
+    parent.scrollTop = parent.scrollHeight;
 }
 
 chatInput.addEventListener('keypress', (e) => {

@@ -108,7 +108,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on('message', (data) => {
-        console.log(`sending message ${data}`)
         io.to(room.name).emit('chat',
             chat.newMessage(game.getPlayerNameByID(socket.id), data.text)
         );
