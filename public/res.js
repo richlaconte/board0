@@ -12,6 +12,15 @@ socket.on('chat', (message) => {
     appendChatMessage(message);
 })
 
+socket.on('statusMessage', (message) => {
+
+})
+
+socket.on('users', (users) => {
+    console.log(users);
+    updateUsers(users);
+})
+
 // Change this to clear all then add
 const updateBoard = (newBoard) => {
     if (board.length > 0) {

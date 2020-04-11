@@ -53,6 +53,24 @@ class Game {
                     return this.players[i].name;
                 }
             }
+            for (let spectator in this.spectators) {
+                if (id === this.spectators[spectator].id) {
+                    return this.spectators[spectator].name;
+                }
+            }
+        }
+        this.returnConnectedUsers = () => {
+            let connected = {
+                players: [],
+                spectators: []
+            }
+            for (let player in this.players) {
+                connected.players.push(this.players[player].name);
+            }
+            for (let spectator in this.spectators) {
+                connected.spectators.push(this.spectators[spectator].name);
+            }
+            return connected;
         }
         this.checkTurn = (id) => {
             if (!id) {

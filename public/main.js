@@ -195,6 +195,24 @@ const scrollChatToBottom = () => {
     parent.scrollTop = parent.scrollHeight;
 }
 
+const updateUsers = (users) => {
+    const playerList = document.getElementById('currentPlayers');
+    const spectatorList = document.getElementById('currentSpectators')
+    playerList.innerHTML = '';
+    spectatorList.innerHTML = '';
+
+    for (let player in users.players) {
+        let element = document.createElement('LI');
+        element.innerHTML = users.players[player];
+        playerList.appendChild(element);
+    }
+    for (let spectator in users.spectators) {
+        let element = document.createElement('LI');
+        element.innerHTML = users.spectators[spectator];
+        spectatorList.appendChild(element);
+    }
+}
+
 chatInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         sendMessage(chatInput.value);

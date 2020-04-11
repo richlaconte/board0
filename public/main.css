@@ -14,13 +14,28 @@
     position: absolute;
     height: 200px;
     bottom: 18px;
-    width: 100%;
+    width: 75%;
 }
 #chatList {
     width: 100%;
+    list-style: none;
+    padding-left: 5%;
 }
 .chatItem {
     
+}
+#currentPlayers {
+    margin: 0px;
+    list-style: none;
+}
+#currentSpectators {
+    margin: 0px;
+    list-style: none;
+}
+#userLists {
+    position: absolute;
+    right: 0px;
+    width: 25%;
 }
 #chatInput {
     position: absolute;

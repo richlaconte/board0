@@ -102,25 +102,32 @@ io.on('connection', (socket) => {
         game = room.game;
         chat = room.chat;
         io.to(room.name).emit('board', game.board);
+        io.to(room.name).emit('users', game.returnConnectedUsers());
         io.to(room.name).emit('chat',
             chat.newMessage(game.getPlayerNameByID(socket.id), `has joined the room.`)
         );
     })
 
     socket.on('message', (data) => {
-        io.to(room.name).emit('chat',
-            chat.newMessage(game.getPlayerNameByID(socket.id), data.text)
-        );
+        if (room) {
+            io.to(room.name).emit('chat',
+                chat.newMessage(game.getPlayerNameByID(socket.id), data.text)
+            );
+        }
     })
 
     socket.on('disconnect', () => {
         console.log(`user ${socket.id} disconnected`);
         if (game) {
             game.removePlayer(socket.id);
+            io.to(room.name).emit('users', game.returnConnectedUsers());
         }
-        io.to(room.name).emit('chat',
-            chat.newMessage(game.getPlayerNameByID(socket.id), `has left the room.`)
-        );
+        if (room) {
+            io.to(room.name).emit('chat',
+                chat.newMessage(`A player has left the room.`)
+            );
+        }
+
     })
 
     socket.on('move', (data) => {
