@@ -20,17 +20,26 @@ app.get('/css', (req, res) => {
 })
 
 let rooms = [];
-const assignRoom = (roomName, playerID, playerName) => {
+const assignRoom = (roomName, playerID, playerName, socket) => {
     if (rooms.length > 0) {
-        for (room in rooms) {
-            if (rooms[room].name === roomName) {
-                rooms[room].game.addPlayer(playerID, playerName);
-                return rooms[room];
+        console.log('rooms.length > 0')
+        for (let i = 0; i < rooms.length; i++) {
+            if (rooms[i].name === roomName) {
+                rooms[i].game.addPlayer(playerID, playerName);
+                socket.join(roomName);
+                return rooms[i];
             }
         }
-    } else {
+        console.log('didnt find existing room')
         let room = new Room(roomName, playerID, playerName);
         rooms.push(room);
+        socket.join(roomName);
+        return rooms[rooms.length - 1];
+    } else {
+        console.log('no rooms found')
+        let room = new Room(roomName, playerID, playerName);
+        rooms.push(room);
+        socket.join(roomName);
         return rooms[0];
     }
 }
@@ -85,16 +94,24 @@ io.on('connection', (socket) => {
     //game.addPlayer(socket.id, 'test');    
     let room;
     let game;
+    let chat;
     socket.on('joinRoom', (data) => {
         console.log('joinRoom request received');
-        room = assignRoom(data.roomName, socket.id, data.playerName);
+        room = assignRoom(data.roomName, socket.id, data.playerName, socket);
+        //console.log(room);
         game = room.game;
-        io.emit('board', game.board);
+        chat = room.chat;
+        io.to(room.name).emit('board', game.board);
+        io.to(room.name).emit('chat',
+            chat.newMessage(game.getPlayerNameByID(socket.id), `has joined the room.`)
+        );
     })
 
     socket.on('disconnect', () => {
         console.log(`user ${socket.id} disconnected`);
-        game.removePlayer(socket.id);
+        if (game) {
+            game.removePlayer(socket.id);
+        }
     })
 
     socket.on('move', (data) => {
@@ -106,7 +123,7 @@ io.on('connection', (socket) => {
                 game.toggleTurn();
             }
         }
-        io.emit('board', game.board);
+        io.to(room.name).emit('board', game.board);
     })
     setTimeout(sendHeartbeat, 8000);
 });

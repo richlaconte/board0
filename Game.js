@@ -47,6 +47,13 @@ class Game {
                 }
             }
         };
+        this.getPlayerNameByID = (id) => {
+            for (let i = 0; i < this.players.length; i++) {
+                if (id === this.players[i].id) {
+                    return this.players[i].name;
+                }
+            }
+        }
         this.checkTurn = (id) => {
             if (!id) {
                 return this.turn;

@@ -1,10 +1,15 @@
-socket.on('board', (board) => {
+socket.on('board', (newBoard) => {
     console.log('unpdating board');
-    updateBoard(board);
+    updateBoard(newBoard);
 })
 
 socket.on('ping', () => {
     console.log('ping');
+})
+
+socket.on('chat', (message) => {
+    console.log(message);
+    appendChatMessage(message);
 })
 
 // Change this to clear all then add
@@ -21,5 +26,6 @@ const updateBoard = (newBoard) => {
     } else {
         createBoard();
         showHand();
+        updateBoard(newBoard);
     }
 }

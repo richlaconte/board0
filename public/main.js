@@ -17,6 +17,7 @@ const showHand = () => {
 let board = [];
 
 const createBoard = () => {
+    console.log('creating board')
     let width = 10;
     let height = 10;
     for (let i = 0; i < height; i++) {
@@ -174,3 +175,13 @@ const moveUnitByXY = (unit, x, y) => {
 
 //placeUnit(0, 1, null, null, 'test')
 addUnitToHand();
+
+
+// CHAT
+const appendChatMessage = (message) => {
+    let msg = document.createElement('li');
+    msg.className = 'chatItem';
+    msg.innerHTML = message.playerName + ': ' + message.text;
+    let list = document.getElementById('chatList');
+    list.appendChild(msg);
+}
