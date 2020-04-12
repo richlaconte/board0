@@ -44,39 +44,6 @@ const assignRoom = (roomName, playerID, playerName, socket) => {
     }
 }
 
-const move = (game, playerID, oldX, oldY, newX, newY) => {
-    if (oldX === 'hand') {
-        if (game.board[newY][newX] === null) {
-            let obj = {
-                playerID,
-                type: 'unit'
-            }
-            game.board[newY][newX] = obj;
-            return true;
-        }
-    } else {
-        if (game.board[oldY][oldX].playerID === playerID) {
-            if (game.board[newY][newX] === null) {
-                game.board[oldY][oldX] = null;
-
-                let obj = {
-                    playerID,
-                    type: 'unit'
-                }
-                game.board[newY][newX] = obj;
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            console.log('ERROR: unit not owned by player');
-            return false;
-        }
-    }
-
-
-}
-
 let sendHeartbeat = () => {
     setTimeout(sendHeartbeat, 8000);
     io.emit('ping', { beat: 1 });
@@ -135,7 +102,7 @@ io.on('connection', (socket) => {
         console.log('Is turn?:', game.checkTurn(socket.id));
         console.log(`turn: ${game.turn}`);
         if (game.checkTurn(socket.id)) {
-            if (move(game, socket.id, data.oldX, data.oldY, data.newX, data.newY)) {
+            if (game.moveUnit(socket.id, data.oldX, data.oldY, data.newX, data.newY)) {
                 game.toggleTurn();
             }
         }
