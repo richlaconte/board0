@@ -6,11 +6,12 @@
     width: 600px;
     height: 200px;
     border: 1px solid black;
-    overflow: scroll;
+    overflow-y: scroll;
     position: relative;
 }
 #chatListParent {
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     position: absolute;
     height: 200px;
     bottom: 18px;
@@ -95,3 +96,22 @@
 .dragging {
     position: absolute !important;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
