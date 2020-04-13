@@ -44,9 +44,11 @@ const assignRoom = (roomName, playerID, playerName, socket) => {
     }
 }
 
-let sendHeartbeat = () => {
-    setTimeout(sendHeartbeat, 8000);
-    io.emit('ping', { beat: 1 });
+
+
+const sendHeartbeat = (id) => {
+    setTimeout(() => sendHeartbeat(id), 8000);
+    io.to(id).emit('ping', { beat: 1 });
 }
 
 io.on('connection', (socket) => {
@@ -108,7 +110,7 @@ io.on('connection', (socket) => {
         }
         io.to(room.name).emit('board', game.board);
     })
-    setTimeout(sendHeartbeat, 8000);
+    setTimeout(() => sendHeartbeat(socket.id), 8000);
 });
 
 const PORT = process.env.PORT || 3000;
