@@ -86,44 +86,44 @@ class Game {
                 }
                 return false;
             }
-        },
-            this.toggleTurn = () => {
-                if (this.turn === 0) {
-                    this.turn = 1;
-                } else {
-                    this.turn = 0;
+        }
+        this.toggleTurn = () => {
+            if (this.turn === 0) {
+                this.turn = 1;
+            } else {
+                this.turn = 0;
+            }
+        }
+        this.moveUnit = (playerID, oldX, oldY, newX, newY) => {
+            if (oldX === 'hand') {
+                if (this.board[newY][newX] === null) {
+                    let obj = {
+                        playerID,
+                        type: 'unit'
+                    }
+                    this.board[newY][newX] = obj;
+                    return true;
                 }
-            },
-            this.moveUnit = (playerID, oldX, oldY, newX, newY) => {
-                if (oldX === 'hand') {
+            } else {
+                if (this.board[oldY][oldX].playerID === playerID) {
                     if (this.board[newY][newX] === null) {
+                        this.board[oldY][oldX] = null;
+
                         let obj = {
                             playerID,
                             type: 'unit'
                         }
                         this.board[newY][newX] = obj;
                         return true;
-                    }
-                } else {
-                    if (this.board[oldY][oldX].playerID === playerID) {
-                        if (this.board[newY][newX] === null) {
-                            this.board[oldY][oldX] = null;
-
-                            let obj = {
-                                playerID,
-                                type: 'unit'
-                            }
-                            this.board[newY][newX] = obj;
-                            return true;
-                        } else {
-                            return false;
-                        }
                     } else {
-                        console.log('ERROR: unit not owned by player');
                         return false;
                     }
+                } else {
+                    console.log('ERROR: unit not owned by player');
+                    return false;
                 }
             }
+        }
     }
 }
 
