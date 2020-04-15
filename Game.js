@@ -110,8 +110,8 @@ class Game {
             return obj;
         }
         this.moveUnit = (playerID, oldX, oldY, newX, newY) => {
-            let obj = {
-                status: false,
+            let status = {
+                passed: false,
                 code: ''
             }
 
@@ -119,32 +119,61 @@ class Game {
                 if (this.board[newY][newX] === null) {
                     let obj = {
                         playerID,
-                        type: 'unit'
+                        type: 'unit',
+                        speed: 1
                     }
                     this.board[newY][newX] = obj;
-                    obj.status = true;
-                    return obj;
+                    status.passed = true;
+                    return status;
                 }
             } else {
                 if (this.board[oldY][oldX].playerID === playerID) {
                     if (this.board[newY][newX] === null) {
-                        this.board[oldY][oldX] = null;
+                        if (this.checkForMove(oldX, oldY, newX, newY, this.board[oldY][oldX].speed)) {
 
-                        let obj = {
-                            playerID,
-                            type: 'unit'
+                            let obj = {
+                                playerID,
+                                type: 'unit',
+                                speed: this.board[oldY][oldX].speed
+                            }
+                            this.board[oldY][oldX] = null;
+                            this.board[newY][newX] = obj;
+                            status.passed = true;
+                            return status;
+                        } else {
+                            status.passed = false;
+                            status.code = 'tooFar';
+                            return status;
                         }
-                        this.board[newY][newX] = obj;
-                        return true;
                     } else {
                         return false;
                     }
                 } else {
                     console.log('ERROR: unit not owned by player');
-                    obj.status = false;
-                    obj.code = 'notOwned';
-                    return obj;
+                    status.passed = false;
+                    status.code = 'notOwned';
+                    return status;
                 }
+            }
+        }
+        this.checkForMove = (oldX, oldY, newX, newY, speed) => {
+            let change = 0;
+            if (oldX > newX) {
+                change += (oldX - newX);
+            } else {
+                change += (newX - oldX);
+            }
+
+            if (oldY > newY) {
+                change += (oldY - newY);
+            } else {
+                change += (newY - oldY);
+            }
+
+            if (speed >= change) {
+                return true;
+            } else {
+                return false;
             }
         }
     }

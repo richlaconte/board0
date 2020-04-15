@@ -44,8 +44,6 @@ const assignRoom = (roomName, playerID, playerName, socket) => {
     }
 }
 
-
-
 const sendHeartbeat = (id) => {
     setTimeout(() => sendHeartbeat(id), 8000);
     io.to(id).emit('ping', { beat: 1 });
@@ -104,10 +102,13 @@ io.on('connection', (socket) => {
         console.log('Is turn?:', game.checkTurn(socket.id));
         console.log(`turn: ${game.turn}`);
         if (game.checkTurn(socket.id)) {
-            if (game.moveUnit(socket.id, data.oldX, data.oldY, data.newX, data.newY).status === true) {
+            let move = game.moveUnit(socket.id, data.oldX, data.oldY, data.newX, data.newY);
+            if (move.passed === true) {
                 game.toggleTurn();
-            } else if (game.moveUnit(socket.id, data.oldX, data.oldY, data.newX, data.newY).code === 'notOwned') {
+            } else if (move.code === 'notOwned') {
                 io.to(socket.id).emit('statusMessage', chat.statusMessage(`That's not your unit.`));
+            } else if (move.code === 'tooFar') {
+                io.to(socket.id).emit('statusMessage', chat.statusMessage(`You can't move that far.`));
             }
         } else {
             io.to(socket.id).emit('statusMessage', chat.statusMessage(`It's not your turn.`));
