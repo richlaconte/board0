@@ -181,13 +181,22 @@ addUnitToHand();
 const chatBtn = document.getElementById('chatBtn');
 const chatInput = document.getElementById('chatInput');
 
-const appendChatMessage = (message) => {
-    let msg = document.createElement('li');
-    msg.className = 'chatItem';
-    msg.innerHTML = message.playerName + ': ' + message.text;
-    let list = document.getElementById('chatList');
-    list.appendChild(msg);
-    scrollChatToBottom();
+const appendChatMessage = (message, type) => {
+    if (type === 'status') {
+        let msg = document.createElement('li');
+        msg.className = 'chatItemStatus';
+        msg.innerHTML = message.text;
+        let list = document.getElementById('chatList');
+        list.appendChild(msg);
+        scrollChatToBottom();
+    } else {
+        let msg = document.createElement('li');
+        msg.className = 'chatItem';
+        msg.innerHTML = message.playerName + ': ' + message.text;
+        let list = document.getElementById('chatList');
+        list.appendChild(msg);
+        scrollChatToBottom();
+    }
 }
 
 const scrollChatToBottom = () => {
@@ -224,3 +233,14 @@ chatBtn.addEventListener('click', () => {
     sendMessage(chatInput.value);
     chatInput.value = '';
 })
+
+// GAME STATS
+const hideRoomOptions = () => {
+    document.getElementById('roomOptionsArea').style.display = 'none';
+}
+const showGameStats = () => {
+    document.getElementById('statsArea').style.display = 'block';
+}
+const updateTurnDisplay = (name) => {
+    document.getElementById('turnDisplay').innerHTML = name;
+}

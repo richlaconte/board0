@@ -9,6 +9,13 @@ class Chat {
             this.messages.push(message);
             return message;
         }
+        this.statusMessage = (text) => {
+            let message = {
+                playerName: null,
+                text
+            }
+            return message;
+        }
     };
 }
 

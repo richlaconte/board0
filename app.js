@@ -70,7 +70,7 @@ io.on('connection', (socket) => {
         //console.log(room);
         game = room.game;
         chat = room.chat;
-        io.to(room.name).emit('board', game.board);
+        io.to(room.name).emit('game', game.returnGame());
         io.to(room.name).emit('users', game.returnConnectedUsers());
         io.to(room.name).emit('chat',
             chat.newMessage(game.getPlayerNameByID(socket.id), `has joined the room.`)
@@ -104,11 +104,15 @@ io.on('connection', (socket) => {
         console.log('Is turn?:', game.checkTurn(socket.id));
         console.log(`turn: ${game.turn}`);
         if (game.checkTurn(socket.id)) {
-            if (game.moveUnit(socket.id, data.oldX, data.oldY, data.newX, data.newY)) {
+            if (game.moveUnit(socket.id, data.oldX, data.oldY, data.newX, data.newY).status === true) {
                 game.toggleTurn();
+            } else if (game.moveUnit(socket.id, data.oldX, data.oldY, data.newX, data.newY).code === 'notOwned') {
+                io.to(socket.id).emit('statusMessage', chat.statusMessage(`That's not your unit.`));
             }
+        } else {
+            io.to(socket.id).emit('statusMessage', chat.statusMessage(`It's not your turn.`));
         }
-        io.to(room.name).emit('board', game.board);
+        io.to(room.name).emit('game', game.returnGame());
     })
     setTimeout(() => sendHeartbeat(socket.id), 8000);
 });

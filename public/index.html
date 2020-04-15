@@ -16,14 +16,22 @@
 </head>
 
 <body>
-    Room:
-    <input id='roomInput'>
-    <br>
-    Name:
-    <input id='nameInput'>
-    <br>
-    <button id='joinBtn'>Join</button>
-    <br>
+    <div id='statsArea' style='display: none;'>
+        <span style='display: inline-block;'>
+            Turn:
+        </span>
+        <div id='turnDisplay' style='display: inline-block;'></div>
+    </div>
+    <div id='roomOptionsArea'>
+        Room:
+        <input id='roomInput'>
+        <br>
+        Name:
+        <input id='nameInput'>
+        <br>
+        <button id='joinBtn'>Join</button>
+        <br>
+    </div>
     <div id='playArea'>
         <div id='board'></div>
         <div id='hand' style='display: none;'></div>
@@ -47,8 +55,6 @@
         </div>
         <input id='chatInput'><button id='chatBtn'>Send</button>
     </div>
-
-
 
     <script src="/socket.io/socket.io.js"></script>
     <script>

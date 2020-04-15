@@ -25,6 +25,9 @@
 .chatItem {
     
 }
+.chatItemStatus {
+    color: green;
+}
 #currentPlayers {
     margin: 0px;
     list-style: none;

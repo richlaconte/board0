@@ -1,6 +1,10 @@
-socket.on('board', (newBoard) => {
-    console.log('unpdating board');
-    updateBoard(newBoard);
+socket.on('game', (game) => {
+    hideRoomOptions();
+    showGameStats();
+    console.log('updating board');
+    console.log(game);
+    updateBoard(game.board);
+    updateTurnDisplay(game.turn);
 })
 
 socket.on('ping', () => {
@@ -13,7 +17,7 @@ socket.on('chat', (message) => {
 })
 
 socket.on('statusMessage', (message) => {
-
+    appendChatMessage(message, 'status');
 })
 
 socket.on('users', (users) => {

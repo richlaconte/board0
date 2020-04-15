@@ -87,6 +87,13 @@ class Game {
                 return false;
             }
         }
+        this.getPlayerNameByTurn = () => {
+            if (this.players[this.turn]) {
+                return this.players[this.turn].name;
+            } else {
+                return 'player2';
+            }
+        }
         this.toggleTurn = () => {
             if (this.turn === 0) {
                 this.turn = 1;
@@ -94,7 +101,20 @@ class Game {
                 this.turn = 0;
             }
         }
+        this.returnGame = () => {
+            let obj = {
+                board: this.board,
+                turn: this.getPlayerNameByTurn()
+            }
+
+            return obj;
+        }
         this.moveUnit = (playerID, oldX, oldY, newX, newY) => {
+            let obj = {
+                status: false,
+                code: ''
+            }
+
             if (oldX === 'hand') {
                 if (this.board[newY][newX] === null) {
                     let obj = {
@@ -102,7 +122,8 @@ class Game {
                         type: 'unit'
                     }
                     this.board[newY][newX] = obj;
-                    return true;
+                    obj.status = true;
+                    return obj;
                 }
             } else {
                 if (this.board[oldY][oldX].playerID === playerID) {
@@ -120,7 +141,9 @@ class Game {
                     }
                 } else {
                     console.log('ERROR: unit not owned by player');
-                    return false;
+                    obj.status = false;
+                    obj.code = 'notOwned';
+                    return obj;
                 }
             }
         }
