@@ -1,5 +1,16 @@
+#left {
+    float: left;
+}
+#right {
+    float: right;
+}
+
 #playArea {
     display: inline-block;
+}
+#selectedArea {
+    width: 600px;
+    height: 100px;
 }
 #chatArea {
     display: inline-block;

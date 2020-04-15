@@ -16,45 +16,53 @@
 </head>
 
 <body>
-    <div id='statsArea' style='display: none;'>
-        <span style='display: inline-block;'>
-            Turn:
-        </span>
-        <div id='turnDisplay' style='display: inline-block;'></div>
-    </div>
-    <div id='roomOptionsArea'>
-        Room:
-        <input id='roomInput'>
-        <br>
-        Name:
-        <input id='nameInput'>
-        <br>
-        <button id='joinBtn'>Join</button>
-        <br>
-    </div>
-    <div id='playArea'>
-        <div id='board'></div>
-        <div id='hand' style='display: none;'></div>
-    </div>
-    <div id='chatArea'>
-        <div id='chatListParent'>
-            <ul id='chatList'>
-
-            </ul>
+    <div id='left'>
+        <div id='statsArea' style='display: none;'>
+            <span style='display: inline-block;'>
+                Turn:
+            </span>
+            <div id='turnDisplay' style='display: inline-block;'></div>
         </div>
-        <div id='userLists'>
-            Players:
-            <ul id='currentPlayers'>
-
-            </ul>
-            Spectators:
+        <div id='roomOptionsArea'>
+            Room:
+            <input id='roomInput'>
             <br>
-            <ul id='currentSpectators'>
-
-            </ul>
+            Name:
+            <input id='nameInput'>
+            <br>
+            <button id='joinBtn'>Join</button>
+            <br>
         </div>
-        <input id='chatInput'><button id='chatBtn'>Send</button>
+        <div id='playArea'>
+            <div id='board'></div>
+            <div id='hand' style='display: none;'></div>
+        </div>
     </div>
+    <div id='right'>
+        <div id='selectedArea'>
+
+        </div>
+        <div id='chatArea'>
+            <div id='chatListParent'>
+                <ul id='chatList'>
+
+                </ul>
+            </div>
+            <div id='userLists'>
+                Players:
+                <ul id='currentPlayers'>
+
+                </ul>
+                Spectators:
+                <br>
+                <ul id='currentSpectators'>
+
+                </ul>
+            </div>
+            <input id='chatInput'><button id='chatBtn'>Send</button>
+        </div>
+    </div>
+
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
